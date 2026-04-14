@@ -37,3 +37,63 @@ function handleAuth() {
 }
 
 <script src="script.js"></script>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>StudyCoin Login</title>
+</head>
+<body>
+
+  <h2>Login</h2>
+
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Password">
+
+  <button onclick="signup()">Sign Up</button>
+  <button onclick="login()">Login</button>
+
+  <p id="msg"></p>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+
+  <script>
+    // 🔑 PASTE YOUR CONFIG HERE
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // SIGN UP
+    function signup() {
+      auth.createUserWithEmailAndPassword(
+        email.value,
+        password.value
+      ).then(() => {
+        msg.innerText = "Account Created!";
+      }).catch(err => {
+        msg.innerText = err.message;
+      });
+    }
+
+    // LOGIN
+    function login() {
+      auth.signInWithEmailAndPassword(
+        email.value,
+        password.value
+      ).then(() => {
+        msg.innerText = "Login Successful!";
+      }).catch(err => {
+        msg.innerText = err.message;
+      });
+    }
+  </script>
+
+</body>
+</html>
