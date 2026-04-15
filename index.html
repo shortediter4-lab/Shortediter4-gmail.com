@@ -148,3 +148,12 @@ window.login = function () {
     });
 };
 </script>
+<div id="dashboard" style="display:none;">
+  <h2 id="welcome"></h2>
+  <h3>Coins: <span id="coins">0</span></h3>
+
+  <button onclick="addCoins()">Earn 10 Coins</button>
+  <button onclick="logout()">Logout</button>
+</div>
+
+<button id="loginBtn" onclick="login()">Login with Google</button>
