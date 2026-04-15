@@ -1,4 +1,4 @@
-function login() {
+alert("Script running");function login() {
   const provider = new firebase.auth.GoogleAuthProvider();
 
   auth.signInWithPopup(provider)
