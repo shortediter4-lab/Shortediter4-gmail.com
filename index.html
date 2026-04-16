@@ -1,1 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyCoin | Secure Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
+    <style>
+        body { background-color: #0f172a; font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6 text-white">
+
+    <div class="glass w-full max-w-[380px] rounded-[30px] p-8 shadow-2xl">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-yellow-400 tracking-tight">StudyCoin</h1>
+            <p id="form-subtitle" class="text-slate-400 text-sm mt-2">Login to your wallet</p>
+        </div>
+
+        <div class="space-y-4">
+            <input type="email" id="email" placeholder="Email" required 
+                class="w-full bg-slate-800 border border-slate-700 rounded-2xl px-5 py-4 focus:border-yellow-400 outline-none transition-all text-white">
+            
+            <input type="password" id="password" placeholder="Password" required 
+                class="w-full bg-slate-800 border border-slate-700 rounded-2xl px-5 py-4 focus:border-yellow-400 outline-none transition-all text-white">
+            
+            <button id="main-btn" onclick="handleAuth()" class="w-full bg-yellow-400 text-black font-bold py-4 rounded-2xl hover:bg-yellow-300 active:scale-95 transition-all">
+                Sign In
+            </button>
+
+            <p class="text-center mt-4 text-sm text-slate-400">
+                <span id="toggle-msg">Don't have an account?</span> 
+                <span onclick="toggleMode()" id="toggle-btn" class="text-yellow-400 cursor-pointer font-bold ml-1">Sign Up</span>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // 1. Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAdSDs1QtO2Lai8DzA4JxvKg7Nf1lDk5EI",
+            authDomain: "studycoin-stc.firebaseapp.com",
+            projectId: "studycoin-stc",
+            storageBucket: "studycoin-stc.firebasestorage.app",
+            messagingSenderId: "840351904766",
+            appId: "1:840351904766:web:7ec85a6e8d2cdfa4c246af"
+        };
+
+        // 2. Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        
+        let isLoginMode = true;
+
+        // 3. Logic to switch between Login and Register
+        function toggleMode() {
+            isLoginMode = !isLoginMode;
+            const subtitle = document.getElementById('form-subtitle');
+            const mainBtn = document.getElementById('main-btn');
+            const toggleMsg = document.getElementById('toggle-msg');
+            const toggleBtn = document.getElementById('toggle-btn');
+
+            if (isLoginMode) {
+                subtitle.innerText = "Login to your wallet";
+                mainBtn.innerText = "Sign In";
+                toggleMsg.innerText = "Don't have an account?";
+                toggleBtn.innerText = "Sign Up";
+            } else {
+                subtitle.innerText = "Create your account";
+                mainBtn.innerText = "Create Account";
+                toggleMsg.innerText = "Already have an account?";
+                toggleBtn.innerText = "Sign In";
+            }
+        }
+
+        // 4. Authentication Handler
+        async function handleAuth() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const btn = document.getElementById('main-btn');
+
+            if (!email || !password) {
+                alert("Please fill in both fields.");
+                return;
+            }
+
+            // UI feedback
+            btn.innerText = "Processing...";
+            btn.disabled = true;
+
+            try {
+                if (isLoginMode) {
+                    // Login existing user
+                    await auth.signInWithEmailAndPassword(email, password);
+                    alert("Welcome back to StudyCoin!");
+                } else {
+                    // Register new user
+                    await auth.createUserWithEmailAndPassword(email, password);
+                    alert("Account created successfully!");
+                }
+                
+                // You can redirect to your main study dashboard here:
+                // window.location.href = "dashboard.html";
+                
+            } catch (error) {
+                // Display error message from Firebase (e.g., "User not found" or "Weak password")
+                alert(error.message);
+            } finally {
+                // Reset button state
+                btn.innerText = isLoginMode ? "Sign In" : "Create Account";
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
 
