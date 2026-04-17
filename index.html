@@ -3,120 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyCoin | Secure Login</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-
+    <title>StudyCoin - Learn, Play & Earn Crypto</title>
     <style>
-        body { background-color: #0f172a; font-family: 'Inter', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e2937);
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+        header {
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.9);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #22d3ee;
+        }
+        nav a {
+            color: #e2e8f0;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        .hero {
+            text-align: center;
+            padding: 120px 20px 80px;
+            background: url('https://source.unsplash.com/random/1600x900/?study,education') no-repeat center/cover;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.75);
+        }
+        .hero-content {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: #67e8f9;
+        }
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            margin: 10px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .btn-primary {
+            background: #22d3ee;
+            color: #0f172a;
+        }
+        .btn-secondary {
+            background: transparent;
+            color: #e2e8f0;
+            border: 2px solid #22d3ee;
+        }
+        section {
+            padding: 80px 5%;
+        }
+        h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: #67e8f9;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .card {
+            background: #1e2937;
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+        }
+        .how-it-works {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .step {
+            text-align: center;
+        }
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: #22d3ee;
+            color: #0f172a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin: 0 auto 20px;
+        }
+        .roadmap {
+            background: #1e2937;
+            border-radius: 16px;
+            padding: 40px;
+        }
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: #0f172a;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+        }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-6 text-white">
+<body>
 
-    <div class="glass w-full max-w-[380px] rounded-[30px] p-8 shadow-2xl">
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-yellow-400 tracking-tight">StudyCoin</h1>
-            <p id="form-subtitle" class="text-slate-400 text-sm mt-2">Login to your wallet</p>
+    <header>
+        <div class="logo">StudyCoin</div>
+        <nav>
+            <a href="#how">How it Works</a>
+            <a href="#features">Features</a>
+            <a href="#roadmap">Roadmap</a>
+            <a href="#community">Community</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Learn • Play • Earn Crypto</h1>
+            <p>Study smarter with interactive quizzes and games.<br>Earn real StudyCoin rewards while you learn.</p>
+            <a href="#" class="btn btn-primary">Try Demo Now</a>
+            <a href="#community" class="btn btn-secondary">Join Community</a>
         </div>
+    </section>
 
-        <div class="space-y-4">
-            <input type="email" id="email" placeholder="Email" required 
-                class="w-full bg-slate-800 border border-slate-700 rounded-2xl px-5 py-4 focus:border-yellow-400 outline-none transition-all text-white">
-            
-            <input type="password" id="password" placeholder="Password" required 
-                class="w-full bg-slate-800 border border-slate-700 rounded-2xl px-5 py-4 focus:border-yellow-400 outline-none transition-all text-white">
-            
-            <button id="main-btn" onclick="handleAuth()" class="w-full bg-yellow-400 text-black font-bold py-4 rounded-2xl hover:bg-yellow-300 active:scale-95 transition-all">
-                Sign In
-            </button>
-
-            <p class="text-center mt-4 text-sm text-slate-400">
-                <span id="toggle-msg">Don't have an account?</span> 
-                <span onclick="toggleMode()" id="toggle-btn" class="text-yellow-400 cursor-pointer font-bold ml-1">Sign Up</span>
-            </p>
+    <section id="how">
+        <h2>How StudyCoin Works</h2>
+        <div class="how-it-works">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Sign Up</h3>
+                <p>Create free account or connect wallet</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Study & Play</h3>
+                <p>Complete lessons, quizzes, and mini-games</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Earn Rewards</h3>
+                <p>Get StudyCoin tokens for your progress</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Use or Trade</h3>
+                <p>Use tokens in app or trade after token launch (End 2027)</p>
+            </div>
         </div>
-    </div>
+    </section>
 
+    <section id="features" style="background: #1e2937;">
+        <h2>Key Features</h2>
+        <div class="features">
+            <div class="card">
+                <h3>📚 Interactive Lessons</h3>
+                <p>Math, Science, Languages & more</p>
+            </div>
+            <div class="card">
+                <h3>🎮 Play-to-Earn Games</h3>
+                <p>Fun mini-games that reward learning</p>
+            </div>
+            <div class="card">
+                <h3>🏆 Daily Quizzes</h3>
+                <p>Challenge yourself and earn more</p>
+            </div>
+            <div class="card">
+                <h3>📊 Progress Tracking</h3>
+                <p>See your improvement over time</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="roadmap">
+        <h2>Roadmap</h2>
+        <div class="roadmap">
+            <p><strong>2026:</strong> Build MVP app • Launch demo • Grow community</p>
+            <p><strong>2027:</strong> Add more subjects & games • Improve rewards system</p>
+            <p><strong>End of 2027:</strong> Official StudyCoin token launch on blockchain</p>
+        </div>
+    </section>
+
+    <section id="community" style="text-align: center;">
+        <h2>Join Our Community</h2>
+        <p style="font-size: 1.3rem; margin: 30px 0;">Be part of the future of learning + earning</p>
+        <a href="https://t.me/yourtelegram" class="btn btn-primary" style="margin: 10px;">Telegram</a>
+        <a href="https://x.com/yourtwitter" class="btn btn-primary" style="margin: 10px;">X / Twitter</a>
+        <a href="#" class="btn btn-primary" style="margin: 10px;">Discord</a>
+    </section>
+
+    <footer>
+        <p>StudyCoin © 2026 • Building the future of education with crypto</p>
+        <p>Token launch planned for end of 2027 • All rights reserved</p>
+    </footer>
+
+    <!-- Simple fake demo alert for "Try Demo Now" button -->
     <script>
-        // 1. Firebase Configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyAdSDs1QtO2Lai8DzA4JxvKg7Nf1lDk5EI",
-            authDomain: "studycoin-stc.firebaseapp.com",
-            projectId: "studycoin-stc",
-            storageBucket: "studycoin-stc.firebasestorage.app",
-            messagingSenderId: "840351904766",
-            appId: "1:840351904766:web:7ec85a6e8d2cdfa4c246af"
-        };
-
-        // 2. Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        
-        let isLoginMode = true;
-
-        // 3. Logic to switch between Login and Register
-        function toggleMode() {
-            isLoginMode = !isLoginMode;
-            const subtitle = document.getElementById('form-subtitle');
-            const mainBtn = document.getElementById('main-btn');
-            const toggleMsg = document.getElementById('toggle-msg');
-            const toggleBtn = document.getElementById('toggle-btn');
-
-            if (isLoginMode) {
-                subtitle.innerText = "Login to your wallet";
-                mainBtn.innerText = "Sign In";
-                toggleMsg.innerText = "Don't have an account?";
-                toggleBtn.innerText = "Sign Up";
-            } else {
-                subtitle.innerText = "Create your account";
-                mainBtn.innerText = "Create Account";
-                toggleMsg.innerText = "Already have an account?";
-                toggleBtn.innerText = "Sign In";
+        document.querySelectorAll('.btn-primary').forEach(btn => {
+            if (btn.textContent.includes('Demo')) {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    alert("🎉 Demo coming soon! For now, join our community and follow updates.");
+                });
             }
-        }
-
-        // 4. Authentication Handler
-        async function handleAuth() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const btn = document.getElementById('main-btn');
-
-            if (!email || !password) {
-                alert("Please fill in both fields.");
-                return;
-            }
-
-            // UI feedback
-            btn.innerText = "Processing...";
-            btn.disabled = true;
-
-            try {
-                if (isLoginMode) {
-                    // Login existing user
-                    await auth.signInWithEmailAndPassword(email, password);
-                    alert("Welcome back to StudyCoin!");
-                } else {
-                    // Register new user
-                    await auth.createUserWithEmailAndPassword(email, password);
-                    alert("Account created successfully!");
-                }
-                
-                // You can redirect to your main study dashboard here:
-                // window.location.href = "dashboard.html";
-                
-            } catch (error) {
-                // Display error message from Firebase (e.g., "User not found" or "Weak password")
-                alert(error.message);
-            } finally {
-                // Reset button state
-                btn.innerText = isLoginMode ? "Sign In" : "Create Account";
-                btn.disabled = false;
-            }
-        }
+        });
     </script>
+
 </body>
 </html>
-
