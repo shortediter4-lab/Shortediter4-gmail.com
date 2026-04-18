@@ -1,1 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyCoin - Learn, Play & Earn Crypto</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e2937);
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+        header {
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo { font-size: 28px; font-weight: bold; color: #22d3ee; }
+        nav a { color: #e2e8f0; margin: 0 15px; text-decoration: none; }
+        .auth-btn {
+            padding: 10px 22px;
+            background: #22d3ee;
+            color: #0f172a;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .hero { 
+            text-align: center; 
+            padding: 140px 20px 100px; 
+            background: url('https://source.unsplash.com/random/1600x900/?study,books') no-repeat center/cover; 
+            position: relative; 
+        }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.75); }
+        .hero-content { position: relative; max-width: 900px; margin: 0 auto; }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 20px; color: #67e8f9; }
+        .hero p { font-size: 1.4rem; max-width: 700px; margin: 0 auto 40px; }
+        .btn { 
+            display: inline-block; 
+            padding: 14px 32px; 
+            margin: 10px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            font-size: 1.1rem; 
+        }
+        .btn-primary { background: #22d3ee; color: #0f172a; }
+        .btn-secondary { background: transparent; color: #e2e8f0; border: 2px solid #22d3ee; }
+        section { padding: 80px 5%; }
+        h2 { text-align: center; font-size: 2.5rem; margin-bottom: 50px; color: #67e8f9; }
+        .how-it-works, .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .step, .card { background: #1e2937; padding: 30px; border-radius: 16px; text-align: center; }
+        .step-number { 
+            width: 60px; height: 60px; background: #22d3ee; color: #0f172a; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+            font-size: 1.8rem; margin: 0 auto 20px; 
+        }
+        .roadmap { background: #1e2937; border-radius: 16px; padding: 40px; }
+        footer { text-align: center; padding: 40px 20px; background: #0f172a; font-size: 0.9rem; }
 
+        /* Modal */
+        .modal { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.85); z-index: 200; align-items: center; justify-content: center; 
+        }
+        .modal-content { 
+            background: #1e2937; padding: 40px; border-radius: 20px; width: 90%; max-width: 420px; 
+            text-align: center; position: relative; 
+        }
+        .close { position: absolute; top: 15px; right: 25px; font-size: 32px; cursor: pointer; color: #94a3b8; }
+        .login-form input { 
+            width: 100%; padding: 14px; margin: 12px 0; border-radius: 8px; border: none; 
+            background: #334155; color: #e2e8f0; font-size: 1rem; 
+        }
+        .submit-btn, .login-option { 
+            width: 100%; padding: 14px; margin: 12px 0; border: none; border-radius: 12px; 
+            background: #22d3ee; color: #0f172a; font-weight: bold; cursor: pointer; font-size: 1.05rem; 
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">StudyCoin</div>
+        <nav>
+            <a href="#how">How it Works</a>
+            <a href="#features">Features</a>
+            <a href="#roadmap">Roadmap</a>
+        </nav>
+        <button class="auth-btn" id="connectBtn">Connect Wallet</button>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Learn • Play • Earn Crypto</h1>
+            <p>Study smarter with interactive quizzes and games.<br>Earn real StudyCoin rewards while you learn.</p>
+            <a href="#" class="btn btn-primary">Try Demo Now</a>
+            <a href="#community" class="btn btn-secondary">Join Community</a>
+        </div>
+    </section>
+
+    <section id="how">
+        <h2>How StudyCoin Works</h2>
+        <div class="how-it-works">
+            <div class="step"><div class="step-number">1</div><h3>Login</h3><p>Connect or create free account</p></div>
+            <div class="step"><div class="step-number">2</div><h3>Study & Play</h3><p>Complete lessons and mini-games</p></div>
+            <div class="step"><div class="step-number">3</div><h3>Earn Rewards</h3><p>Get StudyCoin for your progress</p></div>
+            <div class="step"><div class="step-number">4</div><h3>Use or Trade</h3><p>After token launch (End 2027)</p></div>
+        </div>
+    </section>
+
+    <section id="features" style="background: #1e2937;">
+        <h2>Key Features</h2>
+        <div class="features">
+            <div class="card"><h3>📚 Interactive Lessons</h3><p>Math, Science & more</p></div>
+            <div class="card"><h3>🎮 Play-to-Earn Games</h3><p>Fun learning games</p></div>
+            <div class="card"><h3>🏆 Daily Quizzes</h3><p>Earn more tokens</p></div>
+            <div class="card"><h3>📊 Progress Tracking</h3><p>See your growth</p></div>
+        </div>
+    </section>
+
+    <section id="roadmap">
+        <h2>Roadmap</h2>
+        <div class="roadmap">
+            <p><strong>2026:</strong> Build MVP app + community growth</p>
+            <p><strong>2027:</strong> Add more subjects and games</p>
+            <p><strong>End of 2027:</strong> Official StudyCoin token launch</p>
+        </div>
+    </section>
+
+    <section id="community" style="text-align: center;">
+        <h2>Join Our Community</h2>
+        <p style="font-size: 1.3rem; margin: 30px 0;">Be part of the future of learning + earning</p>
+        <a href="https://t.me/yourtelegram" class="btn btn-primary" style="margin:10px;">Telegram</a>
+        <a href="https://x.com/yourtwitter" class="btn btn-primary" style="margin:10px;">X / Twitter</a>
+        <a href="#" class="btn btn-primary" style="margin:10px;">Discord</a>
+    </section>
+
+    <footer>
+        <p>StudyCoin © 2026 • Token launch planned for end of 2027</p>
+    </footer>
+
+    <!-- Single Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h3>Login to StudyCoin</h3>
+            
+            <div class="login-form">
+                <input type="email" id="email" placeholder="Email (demo@studycoin.com)" required>
+                <input type="password" id="password" placeholder="Password (123456)" required>
+                <button class="submit-btn" id="loginSubmit">Login</button>
+                <p style="margin-top:15px; font-size:0.9rem; color:#94a3b8;">
+                    Demo Account:<br>demo@studycoin.com / 123456
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('loginModal');
+        const connectBtn = document.getElementById('connectBtn');
+        const closeModal = document.getElementById('closeModal');
+        const loginSubmit = document.getElementById('loginSubmit');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+
+        let isLoggedIn = false;
+        let currentUser = null;
+
+        function checkLoginStatus() {
+            const saved = localStorage.getItem('studycoin_user');
+            if (saved) {
+                isLoggedIn = true;
+                currentUser = JSON.parse(saved);
+                connectBtn.textContent = `Logged In (${currentUser.email.split('@')[0]})`;
+            }
+        }
+
+        connectBtn.addEventListener('click', () => {
+            if (isLoggedIn) {
+                if (confirm("Do you want to logout?")) {
+                    localStorage.removeItem('studycoin_user');
+                    isLoggedIn = false;
+                    connectBtn.textContent = "Connect Wallet";
+                }
+            } else {
+                modal.style.display = "flex";
+            }
+        });
+
+        closeModal.addEventListener('click', () => modal.style.display = "none");
+
+        loginSubmit.addEventListener('click', () => {
+            const email = emailInput.value.trim();
+            const pass = passwordInput.value.trim();
+
+            if (email === "demo@studycoin.com" && pass === "123456") {
+                isLoggedIn = true;
+                currentUser = { email: email };
+                localStorage.setItem('studycoin_user', JSON.stringify(currentUser));
+                connectBtn.textContent = `Logged In (${email.split('@')[0]})`;
+                modal.style.display = "none";
+                alert("✅ Successfully logged in! Welcome to StudyCoin.");
+            } else {
+                alert("❌ Wrong email or password.\n\nUse:\ndemo@studycoin.com\n123456");
+            }
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) modal.style.display = "none";
+        });
+
+        // Demo button
+        document.querySelectorAll('.btn-primary').forEach(btn => {
+            if (btn.textContent.includes('Demo')) {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    alert("🎉 Demo version coming soon!\nLogin first to explore.");
+                });
+            }
+        });
+
+        checkLoginStatus();
+    </script>
+</body>
+</html>
