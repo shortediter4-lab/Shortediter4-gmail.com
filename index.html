@@ -67,3 +67,1118 @@
 </body>
 </html>
 
+Cd frontend
+npx create-react-app .
+npm install axios
+npm startmkdir studycoin-app
+cd studycoin-app
+mkdir backend frontend
+cd backend
+npm init -y
+npm install express mongoose bcryptjs jsonwebtoken cors
+mongod  # Start MongoDB
+node server.js/* src/App.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: #333;
+}
+
+.app-header {
+  text-align: center;
+  padding: 2rem;
+  color: white;
+  background: rgba(0,0,0,0.2);
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+}
+
+.auth-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.auth-form button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.auth-form button:hover {
+  transform: translateY(-2px);
+}
+
+.toggle-auth {
+  text-align: center;
+  color: #667eea;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.error {
+  color: #e74c3c;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.dashboard-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 1.5rem 2rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+.user-stats {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logout-btn {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.stats-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.stats-card:hover {
+  transform: translateY(-5px);
+}
+
+.stats-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.stats-card h3 {
+  font-size: 2rem;
+  color: #667eea;
+  margin-bottom: 0.5rem;
+}
+
+.lessons-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+.lessons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.lesson-card {
+  border: 2px solid #e1e5e9;
+  padding: 1.5rem;
+  border-radius: 12px;
+  transition: all 0.3s;
+}
+
+.lesson-card:hover {
+  border-color: #667eea;
+  transform: translateY(-3px);
+}
+
+.lesson-card.completed {
+  background: #d4edda;
+  border-color: #28a745;
+}
+
+.complete-btn {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(45deg, #28a745, #20c997);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.completed-text {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.stc-value {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.stc-value h3 {
+  color: #667eea;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .dashboard-nav {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}// src/components/Lessons.js
+import React from 'react';
+
+const Lessons = ({ lessons, onComplete }) => (
+  <div className="lessons-section">
+    <h2>📖 Crypto Lessons</h2>
+    <p>Complete lessons to earn STC points!</p>
+    <div className="lessons-grid">
+      {lessons.map(lesson => (
+        <div key={lesson.id} className={`lesson-card ${lesson.completed ? 'completed' : ''}`}>
+          <h4>{lesson.title}</h4>
+          <p>50 STC Points</p>
+          {!lesson.completed ? (
+            <button 
+              onClick={() => onComplete(lesson.id)}
+              className="complete-btn"
+            >
+              Start Lesson
+            </button>
+          ) : (
+            <span className="completed-text">✅ Completed</span>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+export default Lessons;// src/components/StatsCard.js
+import React from 'react';
+
+const StatsCard = ({ title, value, icon }) => (
+  <div className="stats-card">
+    <div className="stats-icon">{icon}</div>
+    <h3>{value}</h3>
+    <p>{title}</p>
+  </div>
+);
+
+export default StatsCard;// src/components/Dashboard.js
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import StatsCard from './StatsCard';
+import Lessons from './Lessons';
+
+const Dashboard = ({ user, token, onLogout }) => {
+  const [profile, setProfile] = useState(user);
+  const [lessons, setLessons] = useState([
+    { id: 'bitcoin', title: 'What is Bitcoin?', completed: false },
+    { id: 'ethereum', title: 'Ethereum & Smart Contracts', completed: false },
+    { id: 'blockchain', title: 'Blockchain Basics', completed: false },
+    { id: 'defi', title: 'DeFi Explained', completed: false },
+    { id: 'nft', title: 'NFTs & Digital Ownership', completed: false }
+  ]);
+
+  const completeLesson = async (lessonId) => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/complete-lesson', 
+        { lessonId }, 
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      
+      setProfile({
+        ...profile,
+        points: response.data.points,
+        level: response.data.level
+      });
+
+      setLessons(lessons.map(lesson => 
+        lesson.id === lessonId 
+          ? { ...lesson, completed: true }
+          : lesson
+      ));
+    } catch (error) {
+      console.error('Error completing lesson:', error);
+    }
+  };
+
+  const dailyBonus = () => {
+    const bonus = profile.dailyStreak * 10;
+    return bonus > 100 ? 100 : bonus;
+  };
+
+  return (
+    <div className="dashboard">
+      <nav className="dashboard-nav">
+        <h2>Welcome, {profile.username}!</h2>
+        <div className="user-stats">
+          <span>Level {profile.level}</span>
+          <span>{profile.points} STC</span>
+          <button onClick={onLogout} className="logout-btn">Logout</button>
+        </div>
+      </nav>
+
+      <div className="stats-grid">
+        <StatsCard title="Total Points" value={profile.points} icon="⭐" />
+        <StatsCard title="Daily Streak" value={`${profile.dailyStreak} days`} icon="🔥" />
+        <StatsCard title="Daily Bonus" value={`${dailyBonus()} STC`} icon="🎁" />
+        <StatsCard title="Lessons Done" value={profile.lessonsCompleted?.length || 0} icon="📚" />
+      </div>
+
+      <Lessons lessons={lessons} onComplete={completeLesson} />
+      
+      <div className="stc-value">
+        <h3>💰 Current STC Value</h3>
+        <p>1 STC = $0.001 (Demo Value)</p>
+        <p>Your balance: ${ (profile.points * 0.001).toFixed(3) }</p>
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;// src/components/Login.js
+import React, { useState } from 'react';
+import axios from 'axios';
+
+const Login = ({ onLogin }) => {
+  const [isRegister, setIsRegister] = useState(false);
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: ''
+  });
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const endpoint = isRegister ? '/api/register' : '/api/login';
+      const response = await axios.post(`http://localhost:5000${endpoint}`, formData);
+      
+      if (!isRegister) {
+        onLogin(response.data.user, response.data.token);
+      } else {
+        alert('Registration successful! Please login.');
+        setIsRegister(false);
+      }
+    } catch (err) {
+      setError(err.response?.data?.error || 'Something went wrong');
+    }
+  };
+
+  return (
+    <div className="login-container">
+      <form onSubmit={handleSubmit} className="auth-form">
+        <h2>{isRegister ? 'Register' : 'Login'}</h2>
+        {isRegister && (
+          <input
+            type="text"
+            placeholder="Username"
+            value={formData.username}
+            onChange={(e) => setFormData({...formData, username: e.target.value})}
+            required
+          />
+        )}
+        <input
+          type="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={(e) => setFormData({...formData, email: e.target.value})}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={(e) => setFormData({...formData, password: e.target.value})}
+          required
+        />
+        <button type="submit">
+          {isRegister ? 'Register' : 'Login'}
+        </button>
+        {error && <p className="error">{error}</p>}
+        <p onClick={() => setIsRegister(!isRegister)} className="toggle-auth">
+          {isRegister ? 'Already have account? Login' : "Don't have account? Register"}
+        </p>
+      </form>
+    </div>
+  );
+};
+
+export default Login;// src/App.js
+import React, { useState, useEffect } from 'react';
+import Login from './components/Login';
+import Dashboard from './components/Dashboard';
+import './App.css';
+
+function App() {
+  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [user, setUser] = useState(null);
+
+  const handleLogin = (userData, newToken) => {
+    setToken(newToken);
+    setUser(userData);
+    localStorage.setItem('token', newToken);
+  };
+
+  const handleLogout = () => {
+    setToken(null);
+    setUser(null);
+    localStorage.removeItem('token');
+  };
+
+  return (
+    <div className="App">
+      <header className="app-header">
+        <h1>🚀 Crypto StudyCoin (STC)</h1>
+        <p>Earn STC points by learning Crypto!</p>
+      </header>
+      
+      {!token ? (
+        <Login onLogin={handleLogin} />
+      ) : (
+        <Dashboard user={user} token={token} onLogout={handleLogout} />
+      )}
+    </div>
+  );
+}
+
+export default App;// server.js
+const express = require('express');
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const cors = require('cors');
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+// MongoDB Connection
+mongoose.connect('mongodb://localhost:27017/studycoin', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+// User Schema
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  points: { type: Number, default: 0 },
+  level: { type: Number, default: 1 },
+  lessonsCompleted: [{ type: String }],
+  dailyStreak: { type: Number, default: 0 },
+  lastLogin: { type: Date }
+});
+
+const User = mongoose.model('User', userSchema);
+
+// Middleware to verify JWT
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  
+  if (!token) return res.sendStatus(401);
+  
+  jwt.verify(token, 'your-secret-key', (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+};
+
+// Routes
+app.post('/api/register', async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    
+    const user = new User({
+      username,
+      email,
+      password: hashedPassword
+    });
+    
+    await user.save();
+    res.status(201).json({ message: 'User created successfully' });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+app.post('/api/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    
+    if (!user || !await bcrypt.compare(password, user.password)) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+    
+    // Update daily streak
+    const today = new Date().toDateString();
+    const lastLogin = user.lastLogin?.toDateString();
+    
+    if (lastLogin !== today) {
+      user.dailyStreak = lastLogin === new Date(Date.now() - 86400000).toDateString() 
+        ? user.dailyStreak + 1 : 1;
+      user.lastLogin = new Date();
+      await user.save();
+    }
+    
+    const token = jwt.sign({ userId: user._id }, 'your-secret-key');
+    res.json({ token, user: { id: user._id, username: user.username, points: user.points, level: user.level, dailyStreak: user.dailyStreak } });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+app.get('/api/profile', authenticateToken, async (req, res) => {
+  const user = await User.findById(req.user.userId).select('-password');
+  res.json(user);
+});
+
+app.post('/api/complete-lesson', authenticateToken, async (req, res) => {
+  const { lessonId } = req.body;
+  const user = await User.findById(req.user.userId);
+  
+  if (!user.lessonsCompleted.includes(lessonId)) {
+    user.lessonsCompleted.push(lessonId);
+    user.points += 50; // 50 points per lesson
+    
+    // Level up logic
+    if (user.points % 500 === 0) {
+      user.level += 1;
+    }
+    
+    await user.save();
+    res.json({ points: user.points, level: user.level });
+  } else {
+    res.status(400).json({ error: 'Lesson already completed' });
+  }
+});
+
+app.listen(5000, () => {
+  console.log('Server running on port 5000');
+});
+Tell me good or notCd frontend
+npx create-react-app .
+npm install axios
+npm startmkdir studycoin-app
+cd studycoin-app
+mkdir backend frontend
+cd backend
+npm init -y
+npm install express mongoose bcryptjs jsonwebtoken cors
+mongod  # Start MongoDB
+node server.js/* src/App.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: #333;
+}
+
+.app-header {
+  text-align: center;
+  padding: 2rem;
+  color: white;
+  background: rgba(0,0,0,0.2);
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+}
+
+.auth-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.auth-form button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.auth-form button:hover {
+  transform: translateY(-2px);
+}
+
+.toggle-auth {
+  text-align: center;
+  color: #667eea;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.error {
+  color: #e74c3c;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.dashboard-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 1.5rem 2rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+.user-stats {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logout-btn {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.stats-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.stats-card:hover {
+  transform: translateY(-5px);
+}
+
+.stats-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.stats-card h3 {
+  font-size: 2rem;
+  color: #667eea;
+  margin-bottom: 0.5rem;
+}
+
+.lessons-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+.lessons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.lesson-card {
+  border: 2px solid #e1e5e9;
+  padding: 1.5rem;
+  border-radius: 12px;
+  transition: all 0.3s;
+}
+
+.lesson-card:hover {
+  border-color: #667eea;
+  transform: translateY(-3px);
+}
+
+.lesson-card.completed {
+  background: #d4edda;
+  border-color: #28a745;
+}
+
+.complete-btn {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(45deg, #28a745, #20c997);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.completed-text {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.stc-value {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.stc-value h3 {
+  color: #667eea;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .dashboard-nav {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}// src/components/Lessons.js
+import React from 'react';
+
+const Lessons = ({ lessons, onComplete }) => (
+  <div className="lessons-section">
+    <h2>📖 Crypto Lessons</h2>
+    <p>Complete lessons to earn STC points!</p>
+    <div className="lessons-grid">
+      {lessons.map(lesson => (
+        <div key={lesson.id} className={`lesson-card ${lesson.completed ? 'completed' : ''}`}>
+          <h4>{lesson.title}</h4>
+          <p>50 STC Points</p>
+          {!lesson.completed ? (
+            <button 
+              onClick={() => onComplete(lesson.id)}
+              className="complete-btn"
+            >
+              Start Lesson
+            </button>
+          ) : (
+            <span className="completed-text">✅ Completed</span>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+export default Lessons;// src/components/StatsCard.js
+import React from 'react';
+
+const StatsCard = ({ title, value, icon }) => (
+  <div className="stats-card">
+    <div className="stats-icon">{icon}</div>
+    <h3>{value}</h3>
+    <p>{title}</p>
+  </div>
+);
+
+export default StatsCard;// src/components/Dashboard.js
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import StatsCard from './StatsCard';
+import Lessons from './Lessons';
+
+const Dashboard = ({ user, token, onLogout }) => {
+  const [profile, setProfile] = useState(user);
+  const [lessons, setLessons] = useState([
+    { id: 'bitcoin', title: 'What is Bitcoin?', completed: false },
+    { id: 'ethereum', title: 'Ethereum & Smart Contracts', completed: false },
+    { id: 'blockchain', title: 'Blockchain Basics', completed: false },
+    { id: 'defi', title: 'DeFi Explained', completed: false },
+    { id: 'nft', title: 'NFTs & Digital Ownership', completed: false }
+  ]);
+
+  const completeLesson = async (lessonId) => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/complete-lesson', 
+        { lessonId }, 
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      
+      setProfile({
+        ...profile,
+        points: response.data.points,
+        level: response.data.level
+      });
+
+      setLessons(lessons.map(lesson => 
+        lesson.id === lessonId 
+          ? { ...lesson, completed: true }
+          : lesson
+      ));
+    } catch (error) {
+      console.error('Error completing lesson:', error);
+    }
+  };
+
+  const dailyBonus = () => {
+    const bonus = profile.dailyStreak * 10;
+    return bonus > 100 ? 100 : bonus;
+  };
+
+  return (
+    <div className="dashboard">
+      <nav className="dashboard-nav">
+        <h2>Welcome, {profile.username}!</h2>
+        <div className="user-stats">
+          <span>Level {profile.level}</span>
+          <span>{profile.points} STC</span>
+          <button onClick={onLogout} className="logout-btn">Logout</button>
+        </div>
+      </nav>
+
+      <div className="stats-grid">
+        <StatsCard title="Total Points" value={profile.points} icon="⭐" />
+        <StatsCard title="Daily Streak" value={`${profile.dailyStreak} days`} icon="🔥" />
+        <StatsCard title="Daily Bonus" value={`${dailyBonus()} STC`} icon="🎁" />
+        <StatsCard title="Lessons Done" value={profile.lessonsCompleted?.length || 0} icon="📚" />
+      </div>
+
+      <Lessons lessons={lessons} onComplete={completeLesson} />
+      
+      <div className="stc-value">
+        <h3>💰 Current STC Value</h3>
+        <p>1 STC = $0.001 (Demo Value)</p>
+        <p>Your balance: ${ (profile.points * 0.001).toFixed(3) }</p>
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;// src/components/Login.js
+import React, { useState } from 'react';
+import axios from 'axios';
+
+const Login = ({ onLogin }) => {
+  const [isRegister, setIsRegister] = useState(false);
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: ''
+  });
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const endpoint = isRegister ? '/api/register' : '/api/login';
+      const response = await axios.post(`http://localhost:5000${endpoint}`, formData);
+      
+      if (!isRegister) {
+        onLogin(response.data.user, response.data.token);
+      } else {
+        alert('Registration successful! Please login.');
+        setIsRegister(false);
+      }
+    } catch (err) {
+      setError(err.response?.data?.error || 'Something went wrong');
+    }
+  };
+
+  return (
+    <div className="login-container">
+      <form onSubmit={handleSubmit} className="auth-form">
+        <h2>{isRegister ? 'Register' : 'Login'}</h2>
+        {isRegister && (
+          <input
+            type="text"
+            placeholder="Username"
+            value={formData.username}
+            onChange={(e) => setFormData({...formData, username: e.target.value})}
+            required
+          />
+        )}
+        <input
+          type="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={(e) => setFormData({...formData, email: e.target.value})}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={(e) => setFormData({...formData, password: e.target.value})}
+          required
+        />
+        <button type="submit">
+          {isRegister ? 'Register' : 'Login'}
+        </button>
+        {error && <p className="error">{error}</p>}
+        <p onClick={() => setIsRegister(!isRegister)} className="toggle-auth">
+          {isRegister ? 'Already have account? Login' : "Don't have account? Register"}
+        </p>
+      </form>
+    </div>
+  );
+};
+
+export default Login;// src/App.js
+import React, { useState, useEffect } from 'react';
+import Login from './components/Login';
+import Dashboard from './components/Dashboard';
+import './App.css';
+
+function App() {
+  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [user, setUser] = useState(null);
+
+  const handleLogin = (userData, newToken) => {
+    setToken(newToken);
+    setUser(userData);
+    localStorage.setItem('token', newToken);
+  };
+
+  const handleLogout = () => {
+    setToken(null);
+    setUser(null);
+    localStorage.removeItem('token');
+  };
+
+  return (
+    <div className="App">
+      <header className="app-header">
+        <h1>🚀 Crypto StudyCoin (STC)</h1>
+        <p>Earn STC points by learning Crypto!</p>
+      </header>
+      
+      {!token ? (
+        <Login onLogin={handleLogin} />
+      ) : (
+        <Dashboard user={user} token={token} onLogout={handleLogout} />
+      )}
+    </div>
+  );
+}
+
+export default App;// server.js
+const express = require('express');
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const cors = require('cors');
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+// MongoDB Connection
+mongoose.connect('mongodb://localhost:27017/studycoin', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+// User Schema
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  points: { type: Number, default: 0 },
+  level: { type: Number, default: 1 },
+  lessonsCompleted: [{ type: String }],
+  dailyStreak: { type: Number, default: 0 },
+  lastLogin: { type: Date }
+});
+
+const User = mongoose.model('User', userSchema);
+
+// Middleware to verify JWT
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  
+  if (!token) return res.sendStatus(401);
+  
+  jwt.verify(token, 'your-secret-key', (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+};
+
+// Routes
+app.post('/api/register', async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    
+    const user = new User({
+      username,
+      email,
+      password: hashedPassword
+    });
+    
+    await user.save();
+    res.status(201).json({ message: 'User created successfully' });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+app.post('/api/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    
+    if (!user || !await bcrypt.compare(password, user.password)) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+    
+    // Update daily streak
+    const today = new Date().toDateString();
+    const lastLogin = user.lastLogin?.toDateString();
+    
+    if (lastLogin !== today) {
+      user.dailyStreak = lastLogin === new Date(Date.now() - 86400000).toDateString() 
+        ? user.dailyStreak + 1 : 1;
+      user.lastLogin = new Date();
+      await user.save();
+    }
+    
+    const token = jwt.sign({ userId: user._id }, 'your-secret-key');
+    res.json({ token, user: { id: user._id, username: user.username, points: user.points, level: user.level, dailyStreak: user.dailyStreak } });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+app.get('/api/profile', authenticateToken, async (req, res) => {
+  const user = await User.findById(req.user.userId).select('-password');
+  res.json(user);
+});
+
+app.post('/api/complete-lesson', authenticateToken, async (req, res) => {
+  const { lessonId } = req.body;
+  const user = await User.findById(req.user.userId);
+  
+  if (!user.lessonsCompleted.includes(lessonId)) {
+    user.lessonsCompleted.push(lessonId);
+    user.points += 50; // 50 points per lesson
+    
+    // Level up logic
+    if (user.points % 500 === 0) {
+      user.level += 1;
+    }
+    
+    await user.save();
+    res.json({ points: user.points, level: user.level });
+  } else {
+    res.status(400).json({ error: 'Lesson already completed' });
+  }
+});
+
+app.listen(5000, () => {
+  console.log('Server running on port 5000');
+});
+Tell me good or not
